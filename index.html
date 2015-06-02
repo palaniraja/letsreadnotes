@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Let us read music</title>
+    <style type="text/css">
+    * {
+        text-align: center;
+        font-family: Arial;
+    }
+    
+    #container {
+        margin: 20 auto;
+    }
+    
+    #header {}
+    
+    #keys {}
+    
+    .noteButton {
+        padding: 0.8em;
+        font-weight: bold;
+        margin: 0 1em;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="container">
+        <div id="header">
+            <h1>Practise </h1>
+        </div>
+        <div id="notes">
+            <img id="noteImg" />
+        </div>
+        <div id="keys">
+            <span class="noteButton notea">A</span>
+            <span class="noteButton noteb">B</span>
+            <span class="noteButton notec">C</span>
+            <span class="noteButton noted">D</span>
+            <span class="noteButton notee">E</span>
+            <span class="noteButton notef">F</span>
+            <span class="noteButton noteg">G</span>
+        </div>
+        <div id="footer">
+            Hide Notes :
+            <input type="checkbox" />
+            <button id="speed">Adjust Speed</button>
+            <button id="pause">Pause</button>
+        </div>
+    </div>
+    <script type="text/javascript">
+    var data = ["c", "d", "e", "f", "g", "a", "b"];
+
+    var speedbutton = document.getElementById("speed");
+    var img = document.getElementById("noteImg");
+    var pauseButton = document.getElementById("pause");
+
+    var currentSpeed = 500;
+
+    var handler = createNewTimeout(currentSpeed);
+
+    speedbutton.addEventListener("click", function() {
+        clearTimeout(handler)
+        currentSpeed = prompt("Enter new value for speed", currentSpeed) || currentSpeed;
+        createNewTimeout(currentSpeed);
+    });
+
+     pauseButton.addEventListener("click", function() {
+     	clearTimeout(handler);
+     });
+
+    function createNewTimeout(interval) {
+        var handle = setTimeout(function() {
+            console.log("timer");
+            handler = createNewTimeout(currentSpeed);
+        }, interval);
+
+        return handle;
+    }
+    </script>
+</body>
+
+</html>
