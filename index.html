@@ -30,7 +30,12 @@
     #notename {
         font-weight: bold;
         font-size: 2.5em;
-        margin-bottom: .9em;
+        padding: .6em;
+        opacity: 0.01;
+    }
+
+    #notename:hover{
+        opacity: 0.7;
     }
     
     button {
@@ -38,25 +43,29 @@
         font-size: 1em;
         font-weight: bold;
     }
+    .tip{
+        opacity: 0.5;
+    }
     </style>
 </head>
 
 <body>
     <div id="container">
         <div id="header">
-            <h3>Let us read &#9835; Notes </h3>
-            <hr/>
+            <h3 class="tip">Let us read &#9835; Notes </h3>
+            <hr  class="tip"/>
         </div>
         <div id="controlBar">
             <button id="speed">Adjust Speed</button>
             <button id="pause">Pause</button>
-            Hide Notes :
-            <input type="checkbox" id="hidenotes" />
+            <!-- Hide Notes :
+            <input type="checkbox" id="hidenotes" /> -->
         </div>
         <div id="notes">
             <img id="noteImg" />
         </div>
         <div id="notename"></div>
+        <p class="tip">Hover above to see the notes</p>
         <div id="keys">
             <span class="noteButton notea">A</span>
             <span class="noteButton noteb">B</span>
@@ -79,7 +88,7 @@
     var noteName = document.getElementById('notename');
     var hideNoteName = document.getElementById('hidenotes');
 
-    var currentSpeed = 1000;
+    var currentSpeed = 1500;
     var showNotes = true;
     var currentStateRunning = true;
 
@@ -87,7 +96,7 @@
 
     speedbutton.addEventListener("click", function() {
         clearTimeout(handler)
-        currentSpeed = prompt("Enter new value for speed", currentSpeed) || currentSpeed;
+        currentSpeed = prompt("Enter new value for speed. (1 second = 1000)", currentSpeed) || currentSpeed;
         createNewTimeout(currentSpeed);
     });
 
