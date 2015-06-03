@@ -15,12 +15,26 @@
     
     #header {}
     
-    #keys {}
+    #keys {
+        display: none;
+    }
     
     .noteButton {
         padding: 0.8em;
         font-weight: bold;
         margin: 0 1em;
+    }
+    
+    #notename {
+        font-weight: bold;
+        font-size: 2.5em;
+        margin-bottom: .9em;
+    }
+    
+    button {
+        padding: 0.25em;
+        font-size: 1em;
+        font-weight: bold;
     }
     </style>
 </head>
@@ -30,9 +44,16 @@
         <div id="header">
             <h1>Practise </h1>
         </div>
+        <div id="controlBar">
+            <button id="speed">Adjust Speed</button>
+            <button id="pause">Pause</button>
+            Hide Notes :
+            <input type="checkbox" id="hidenotes" />
+        </div>
         <div id="notes">
             <img id="noteImg" />
         </div>
+        <div id="notename"></div>
         <div id="keys">
             <span class="noteButton notea">A</span>
             <span class="noteButton noteb">B</span>
@@ -42,21 +63,22 @@
             <span class="noteButton notef">F</span>
             <span class="noteButton noteg">G</span>
         </div>
-        <div id="footer">
-            Hide Notes :
-            <input type="checkbox" />
-            <button id="speed">Adjust Speed</button>
-            <button id="pause">Pause</button>
-        </div>
     </div>
     <script type="text/javascript">
-    var data = ["c", "d", "e", "f", "g", "a", "b"];
+    /**
+    	    Yes polluting the global space, i'm from 2004 :-)
+        */
+    var data = ["a3", "a4", "a5", "b3", "b4", "b5", "c4", "c5", "c6", "d4", "d5", "e4", "e5", "f4", "f5", "g3", "g4", "g5"];
 
     var speedbutton = document.getElementById("speed");
     var img = document.getElementById("noteImg");
     var pauseButton = document.getElementById("pause");
+    var noteName = document.getElementById('notename');
+    var hideNoteName = document.getElementById('hidenotes');
 
-    var currentSpeed = 500;
+    var currentSpeed = 1000;
+    var showNotes = true;
+    var currentStateRunning = true;
 
     var handler = createNewTimeout(currentSpeed);
 
@@ -66,17 +88,56 @@
         createNewTimeout(currentSpeed);
     });
 
-     pauseButton.addEventListener("click", function() {
-     	clearTimeout(handler);
-     });
+    hideNoteName.addEventListener("click", function() {
+        showNotes = !hideNoteName.checked;
+        if (!showNotes) {
+            notename.innerText = "";
+        }
+    });
+
+    pauseButton.addEventListener("click", function() {
+
+        if (currentStateRunning) {
+            clearTimeout(handler);
+            pauseButton.innerText = "Resume";
+        } else {
+            handler = createNewTimeout(currentSpeed);
+            pauseButton.innerText = "Pause";
+        }
+        currentStateRunning = !currentStateRunning;
+    });
 
     function createNewTimeout(interval) {
         var handle = setTimeout(function() {
-            console.log("timer");
+
+            updateNote(showNotes);
             handler = createNewTimeout(currentSpeed);
         }, interval);
 
         return handle;
+    }
+
+    function randomNote() {
+
+        var data = ["a3", "a4", "a5", "b3", "b4", "b5", "c4", "c5", "c6", "d4", "d5", "e4", "e5", "f4", "f5", "g3", "g4", "g5"];
+        var randIndex = Math.floor(Math.random() * data.length);
+        var randNote = data[randIndex];
+        var out = {
+            "noteName": randNote[0].toUpperCase(),
+            "noteImage": "images/" + randNote + ".png",
+        }
+        return out;
+    }
+
+   
+
+    function updateNote(withLabel) {
+        var rnote = randomNote();
+        if (withLabel) {
+            notename.innerText = rnote.noteName;
+        }
+        img.src = rnote.noteImage;
+
     }
     </script>
 </body>
