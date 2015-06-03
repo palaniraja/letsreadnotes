@@ -13,7 +13,9 @@
         margin: 20 auto;
     }
     
-    #header {}
+    #header {
+        margin-bottom: 1.5em;
+    }
     
     #keys {
         display: none;
@@ -42,7 +44,8 @@
 <body>
     <div id="container">
         <div id="header">
-            <h1>Practise </h1>
+            <h3>Let us read &#9835; Notes </h3>
+            <hr/>
         </div>
         <div id="controlBar">
             <button id="speed">Adjust Speed</button>
@@ -66,8 +69,8 @@
     </div>
     <script type="text/javascript">
     /**
-    	    Yes polluting the global space, i'm from 2004 :-)
-        */
+                Yes polluting the global space, i'm from 2004 :-)
+            */
     var data = ["a3", "a4", "a5", "b3", "b4", "b5", "c4", "c5", "c6", "d4", "d5", "e4", "e5", "f4", "f5", "g3", "g4", "g5"];
 
     var speedbutton = document.getElementById("speed");
@@ -129,7 +132,7 @@
         return out;
     }
 
-   
+
 
     function updateNote(withLabel) {
         var rnote = randomNote();
